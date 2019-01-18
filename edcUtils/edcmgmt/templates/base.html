@@ -1,0 +1,65 @@
+{% load static %}
+<html>
+    <head>
+        <title>EDC Resource Management App</title>
+        <!--link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="{% static 'edcmgmt/site.css' %}">
+<script>
+$(function () {$('[data-toggle="tooltip"]').tooltip()})
+function goBack() {window.history.back();}
+</script>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="{% url 'index' %}">
+              <div style="position:relative;">
+              <img style="position: absolute;clip: rect(0, 40px, 40px, 0);height:35px;" src="{% static 'edcmgmt/ldmLogo.svg' %}"/>
+              </div>
+              <div style="margin-left:50px;">
+              EDC Env Manager
+              </div>
+            </a>
+            {% url 'Env' as env_url %}
+            {% url 'res-saved' as res_url %}
+            {% url 'attr-saved' as attr_url%}
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                  <a href="{{ env_url }}" class="nav-link {% ifequal request.path env_url %}active{% endifequal %}" >Environments</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a href="{{res_url }}" class="nav-link {% ifequal request.path res_url %}active{% endifequal %}" >Resources</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ attr_url }}" class="nav-link {% ifequal request.path attr_url %}active{% endifequal %}">Attributes</a>
+                </li>
+                <!--li class="nav-item">
+                  <a href="{{ attr_url }}" class="nav-link {% ifequal request.path attr_url %}active{% endifequal %}">Smart Domain</a>
+                </li-->
+            </div>
+            <a href="{% url 'logout' %}" class="btn btn-outline-danger my-2 my-sm-0" >Logout</span></a>
+        </nav>
+        <div class="content container">
+            <div class="row">
+                <div class="col">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

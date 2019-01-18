@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+      <div class="row">
+        <div class="col-md">
+          <h4>Environment resources</h4>
+        </div>
+        <div class="col-md" style="align:right">
+          <form action="{% url 'res-ext' %}" method="post">
+            {% csrf_token %}
+            <div class="form-row align-items-right">
+              <div class="col-auto my-1">
+                <select class="form-control" name="env_id" id="env_id">
+                  <option {% if not env %}selected{% endif %} value="0">Choose an environment...</option>
+                  {% for e in all_env %}
+                  <option value="{{ e.pk }}" {% if env.pk == e.pk %}selected{% endif %}>{{e.name}} ({{e.resource_count}})</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="col-auto my-1">
+                <button type="submit" class="btn btn-primary">Get</button>
+              </div>
+            </div>
+          </form>
+       </div>
+     </div>
+</div>
+{% if resources %}
+<table class="table table-sm">
+  <thead><tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Actions</th>
+  </tr></thead>
+  <tbody>
+  {% for res in resources %}
+    <tr>
+      <td>{{ res.resource_name }}</td>
+      <td>{{ res.resource_type_name }}</td>
+      <td>
+<a href="{% url 'res-save' env_id=env.pk resource_name=res.resource_name%}" title="save to repository" data-toggle="tooltip" data-placement="top"><i class="fa fa-floppy-o"></i></a>
+<a href="{% url 'res-export' env_id=env.pk resource_name=res.resource_name%}" title="Download" data-toggle="tooltip" data-placement="top"><i class="fa fa-download"></i></a>
+<a href="{% url 'res-detail' env_id=env.pk resource_name=res.resource_name%}" title="see definition" data-toggle="tooltip" data-placement="top"><i class="fa fa-info-circle"></i></a>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+  <p>No resource found</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if all_env %}
+<table class="table">
+  <thead><tr>
+    <th>Name</th>
+    <th>URL</th>
+    <th>Resource count</th>
+    <th>Object count</th>
+    <th>Custom Attributes count</th>
+    <th>Actions</th>
+  </tr></thead>
+  <tbody>
+  {% for env in all_env %}
+    <tr>
+      <td><a href="{% url 'Edit Env' env_id=env.pk %}">{{ env.name }}</a></td>
+      <td>{{ env.url }}</td>
+      <td><a href="{% url 'res-ext' env_id=env.pk %}">{{ env.resource_count }}</a></td>
+      <td>{{ env.object_count}}</td>
+      <td><a href="{% url 'attr-ext' env_id=env.pk %}">{{ env.custom_attr_count}}</a></td>
+      <td>
+        <a href="{% url 'env-del' env_id=env.pk %}"  title="Delete environment" data-toggle="tooltip" data-placement="top"><i class="fa fa-trash-o"></i></a>
+      </td>
+    </tr>
+  {% endfor %}
+   </tbody>
+</table>
+{% endif %}
+<p><a href="{% url 'New Env' %}" class="btn btn-primary">Create new</a></p>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if config %}
+  <div class="config">
+    {{ config.config_name }}
+    <a href="{% url 'Edit Conf' config_id=config.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+  </div>
+{% else %}
+  <p><a href="/config/new/">Create new</a></p>
+{% endif %}
+{% endblock %}

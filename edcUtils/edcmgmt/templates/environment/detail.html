@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if env %}
+  <div class="env">
+    {{ env.env_name }}
+    <a href="{% url 'Edit Conf' env_id=env.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+  </div>
+{% endif %}
+{% endblock %}

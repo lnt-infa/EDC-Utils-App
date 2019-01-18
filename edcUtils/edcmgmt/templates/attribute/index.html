@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if all_attr %}
+<table class="table">
+  <thead><tr>
+    <th>Name</th>
+    <th>Type</th>
+  </tr></thead>
+  <tbody>
+  {% for attr in all_attr %}
+    <tr>
+      <td><a href="{% url 'Edit Conf' config_id=attr.pk %}">{{ attr.name }}</a></td>
+      <td>{{ attr.type }}</td>
+      <td></td>
+    </tr>
+  {% endfor %}
+   </tbody>
+{% else %}
+  <p><a href="/config/new/">Create new</a></p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+      <div class="row">
+        <div class="col-md">
+          <h4>Environment custom attributes</h4>
+        </div>
+        <div class="col-md" style="align:right">
+          <form action="{% url 'attr-ext' %}" method="post">
+            {% csrf_token %}
+            <div class="form-row align-items-right">
+              <div class="col-auto my-1">
+                <select class="form-control" name="env_id" id="env_id">
+                  <option {% if not env %}selected{% endif %} value="0">Choose an environment...</option>
+                  {% for e in all_env %}
+                  <option value="{{ e.pk }}" {% if env.pk == e.pk %}selected{% endif %}>{{e.name}} ({{e.resource_count}})</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="col-auto my-1">
+                <button type="submit" class="btn btn-primary">Get</button>
+              </div>
+            </div>
+          </form>
+       </div>
+     </div>
+</div>
+{% if attributes %}
+<table class="table table-sm">
+  <thead><tr>
+    <th>Name</th>
+    <th>Data Type</th>
+    <th>Actions</th>
+  </tr></thead>
+  <tbody>
+  {% for attr in attributes %}
+    <tr>
+      <td>{{ attr.name }}</td>
+      <td>{{ attr.datatypeid }}</td>
+      <td>
+<a href="{% url 'attr-save' env_id=env.pk attr_name=attr.name %}" title="save to repository" data-toggle="tooltip" data-placement="top"><i class="fa fa-floppy-o"></i></a>
+<a href="{% url 'attr-export' env_id=env.pk attr_name=attr.name %}" title="Download" data-toggle="tooltip" data-placement="top"><i class="fa fa-download"></i></a>
+<a href="{% url 'attr-detail' env_id=env.pk attr_name=attr.name %}" title="see definition" data-toggle="tooltip" data-placement="top"><i class="fa fa-info-circle"></i></a>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+  <p>No custom attribute found</p>
+{% endif %}
+{% endblock %}

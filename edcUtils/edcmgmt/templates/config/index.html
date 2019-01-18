@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if all_config %}
+<table class="table">
+  <thead><tr>
+    <th>Name</th>
+    <th>URL</th>
+    <th>Resource count</th>
+    <th>Object count</th>
+    <th>Actions</th>
+  </tr></thead>
+  <tbody>
+  {% for conf in all_config %}
+    <tr>
+      <td><a href="{% url 'Edit Conf' config_id=conf.pk %}">{{ conf.config_name }}</a></td>
+      <td>{{ conf.url }}</td>
+      <td>{{ conf.resource_count }}</td>
+      <td>{{ conf.object_count}}</td>
+      <td></td>
+    </tr>
+  {% endfor %}
+   </tbody>
+</table>
+   <p><a href="{% url 'New Configuration' %}">Create new</a></p>
+{% endif %}
+{% endblock %}

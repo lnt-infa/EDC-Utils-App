@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div>
+<form action="{% url 'New Configuration' %}" method="post" class="config-form" >
+{% csrf_token %}
+{{ form.as_p }}
+<a href="{% url 'Configuration' %}" class="btn btn-default">Cancel</a>
+<button type="submit" class="save btn btn-default">Save</button>
+</form>
+</div>
+
+{% endblock %}

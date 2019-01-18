@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<table class="table">
+  <tbody>
+    <tr>
+      <td>Attibute Name</td>
+      <td>{{ attr.name}}</td>
+    </tr>
+    <tr>
+      <td>Data Type</td>
+      <td>{{ attr.datatypeid}}</td>
+    </tr>
+    <tr>
+      <td>Definition</td>
+      <td><pre class="pre-scrollable"><code>{{ json_pretty }}</code></pre></td>
+    </tr>
+  </tbody>
+</table>
+<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="back" onclick="goBack()">
+  back
+</button>
+{% endblock %}
