@@ -35,6 +35,6 @@ The initialization script will create a new database file in the directory given
 * Access the application
 To use the application, use :
 ```
-http://<hostname>:8000/
+http://<hostname>:8000/edcmgmt/
 ```
 
