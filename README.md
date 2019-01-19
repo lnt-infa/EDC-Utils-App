@@ -32,7 +32,7 @@ The initialization script will create a new database file in the directory given
 ```
 ./start.sh
 ```
-*Access the application
+* Access the application
 To use the application, use :
 ```
 http://<hostname>:8000/
