@@ -19,7 +19,12 @@ Getting Started
 ./buid.sh
 ```
 * Edit the file .env and specify the path for the data as well as the listen port for the webserver
+```
+DATA_DIR=$PWD/edcUtils/db
+LISTEN_PORT=8000
+```
 * Execute the initialization script
+The initialization script will create a new database file in the directory given by DATA_DIR and will create superuser, while creating the superuser, the process will ask for a username and a password to be used.
 ```
 ./init.sh
 ``` 
@@ -27,3 +32,9 @@ Getting Started
 ```
 ./start.sh
 ```
+*Access the application
+To use the application, use :
+```
+http://<hostname>:8000/
+```
+
