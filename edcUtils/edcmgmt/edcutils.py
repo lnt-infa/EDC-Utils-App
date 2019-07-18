@@ -13,6 +13,9 @@ from requests.auth import HTTPBasicAuth
 import os.path
 # coding: utf8
 
+import urllib3
+urllib3.disable_warnings()
+
 
 def getFactValue(item, attrName):
     """
@@ -58,7 +61,7 @@ def getAllResource(url, user, pWd):
     apiURL=url + '/access/1/catalog/resources/'
     #print("\turl=" + apiURL)
     header = {"Accept": "application/json"} 
-    tResp = requests.get(apiURL, params={}, headers=header, auth=HTTPBasicAuth(user,pWd))
+    tResp = requests.get(apiURL, params={}, headers=header, auth=HTTPBasicAuth(user,pWd), verify=False)
     print("\tresponse=" + str(tResp.status_code))
     if tResp.status_code == 200:
         # valid - return the jsom
@@ -86,7 +89,7 @@ def getResourceDef(url, user, pWd, resourceName, sensitiveOptions=False):
         apiURL += "?sensitiveOptions=true"
     #print("\turl=" + apiURL)
     header = {"Accept": "application/json"} 
-    tResp = requests.get(apiURL, params={}, headers=header, auth=HTTPBasicAuth(user,pWd))
+    tResp = requests.get(apiURL, params={}, headers=header, auth=HTTPBasicAuth(user,pWd), verify=False)
     print("\tresponse=" + str(tResp.status_code))
     if tResp.status_code == 200:
         # valid - return the jsom
@@ -111,7 +114,7 @@ def updateResourceDef(url, user, pWd, resourceName, resJson):
     apiURL=url + '/access/1/catalog/resources/' + resourceName
     print("\turl=" + apiURL)
     header = {"Accept": "application/json", "Content-Type" : "application/json"} 
-    tResp = requests.put(apiURL, data=json.dumps(resJson), headers=header, auth=HTTPBasicAuth(user,pWd))
+    tResp = requests.put(apiURL, data=json.dumps(resJson), headers=header, auth=HTTPBasicAuth(user,pWd), verify=False)
     print("\tresponse=" + str(tResp.status_code))
     if tResp.status_code == 200:
         # valid - return the jsom
@@ -137,7 +140,7 @@ def createResource(url, user, pWd, resourceName, resourceJson):
     apiURL=url + '/access/1/catalog/resources/'
     header = {'content-type': "application/json"}
     print("\tcreating resource: " + resourceName)
-    newResourceResp = requests.post(apiURL, data=json.dumps(resourceJson), headers=header, auth=HTTPBasicAuth(user,pWd))
+    newResourceResp = requests.post(apiURL, data=json.dumps(resourceJson), headers=header, auth=HTTPBasicAuth(user,pWd), verify=False)
     print("\trc=" + str(newResourceResp.status_code))
     print("\tbody="+ str(newResourceResp.text))
    
@@ -171,7 +174,7 @@ def uploadResourceFile(url, user, pWd, resourceName, fileName, fullPath):
         
     file = { 'file' : (fileName, open(fullPath, readMode), mimeType) }
     print('\t' + str(file))
-    uploadResp = requests.post(apiURL, data=params, files=file, headers=header, auth=HTTPBasicAuth(user,pWd))
+    uploadResp = requests.post(apiURL, data=params, files=file, headers=header, auth=HTTPBasicAuth(user,pWd), verify=False)
     print("\tresponse=" + str(uploadResp.status_code))
     if uploadResp.status_code == 200:
         # valid - return the jsom
@@ -200,7 +203,7 @@ def executeResourceLoad(url, user, pWd, resourceName):
     print("\t" + str(header))
     params={"resourceName": resourceName}
     print("\t" + str(params))
-    uploadResp = requests.post(apiURL, data=json.dumps(params), headers=header, auth=HTTPBasicAuth(user,pWd))
+    uploadResp = requests.post(apiURL, data=json.dumps(params), headers=header, auth=HTTPBasicAuth(user,pWd), verify=False)
     print("\tresponse=" + str(uploadResp.status_code))
     if uploadResp.status_code == 200:
         # valid - return the jsom
@@ -355,7 +358,7 @@ def callGETRestEndpoint(apiURL, user, pWd):
             resourceDef (json)
     """ 
     header = {"Accept": "application/json"} 
-    tResp = requests.get(apiURL, params={}, headers=header, auth=HTTPBasicAuth(user,pWd))
+    tResp = requests.get(apiURL, params={}, headers=header, auth=HTTPBasicAuth(user,pWd), verify=False)
     print("\tresponse=" + str(tResp.status_code))
     if tResp.status_code == 200:
         # valid - return the jsom
@@ -425,7 +428,7 @@ def getCatalogCustomAttr(url, user, pWd):
         parameters = {'offset': offset, 'pageSize': pageSize}
 
         # execute catalog rest call, for a page of results
-        resp = requests.get(resturl, params=parameters, headers=header, auth=HTTPBasicAuth(user,pWd))
+        resp = requests.get(resturl, params=parameters, headers=header, auth=HTTPBasicAuth(user,pWd), verify=False)
         status = resp.status_code
         if status != 200:
             # some error - e.g. catalog not running, or bad credentials
@@ -437,7 +440,7 @@ def getCatalogCustomAttr(url, user, pWd):
         print("objects found: " + str(total) + " processing:" + str(offset+1) + "-" + str(offset+pageSize) + " pagesize="+str(pageSize) + " currentPage=" + str(page) );
 
         # for next iteration
-        offset += pageSize;
+        offset += pageSize
 
         # for each attribute found...
         for attrDef in resultJson["items"]:
@@ -481,7 +484,7 @@ def createAttribute(url, user, pWd, attrJson):
     apiURL=url + '/access/2/catalog/models/attributes/'
     header = {'content-type': "application/json"}
     print("\tcreating custom attribute: " + attrJson['items'][0]['name'])
-    newAttrResp = requests.post(apiURL, data=json.dumps(attrJson), headers=header, auth=HTTPBasicAuth(user,pWd))
+    newAttrResp = requests.post(apiURL, data=json.dumps(attrJson), headers=header, auth=HTTPBasicAuth(user,pWd), verify=False)
     print("\trc=" + str(newAttrResp.status_code))
     print("\tbody="+ str(newAttrResp.text))
     print (attrJson)
